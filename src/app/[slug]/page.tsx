@@ -28,7 +28,7 @@ const Page = async ({
             <option value="3">3</option>
           </select>
           <p>description</p>
-          <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/chekout/`}>purchase</Link>
+          <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/checkout/`}>purchase</Link>
         </div>
       </div>
     </main>

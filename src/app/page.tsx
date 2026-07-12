@@ -66,7 +66,7 @@ export default function Home() {
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[2rem] justify-center">
         {product.map(item => (
         <li key={item.id} className="grid gap-y-[.5rem]">
-          <Link className="text-center py-[.5rem] px-[1rem] shadow-md" href={`/key/`}>
+          <Link className="text-center py-[.5rem] px-[1rem] shadow-md" href={item.link}>
             <Image
               className="dark:invert bg-gray-300 p-[2rem]"
               src={item.image}
