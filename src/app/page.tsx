@@ -62,8 +62,8 @@ export default function Home() {
   ];
   
   return (
-    <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-      <ul className="grid sm:grid-cols-2 md:grid-cols-4 gap-[1rem]">
+    <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center justify-between py-[4rem] px-[2rem] bg-white dark:bg-black">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[2rem] justify-center">
         {product.map(item => (
         <li key={item.id} className="grid gap-y-[.5rem]">
           <Link className="text-center py-[.5rem] px-[1rem] shadow-md" href={`/key/`}>

@@ -9,7 +9,7 @@ const Page = () => {
   }
 
   return (
-    <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center justify-between py-[4rem] px-[2rem] bg-white dark:bg-black">
       <div className="grid gap-y-[.5rem] mx-auto">
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold mb-[.5rem]">order details</legend>
