@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 
 const Page = () => {
 
@@ -10,23 +10,82 @@ const Page = () => {
 
   return (
     <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-      <div className="grid gap-y-[.5rem]">
-        <ul>
-          <li className="grid gap-y-[.5rem]">
-            <Image
-              className="dark:invert bg-gray-300 p-[2rem]"
-              src="/vercel.svg"
-              alt={product.name}
-              width={400}
-              height={300}
-              priority
-            />
-            <h1>{product.name}</h1>
-            <p>¥1,000</p>
-            <p>{product.quantity}</p>
-          </li>
-        </ul>
-        <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/chekout/`}>purchase</Link>
+      <div className="grid gap-y-[.5rem] mx-auto">
+        <fieldset className="my-[.5rem]" id="purchase">
+          <legend className="text-xl font-semibold mb-[.5rem]">order details</legend>
+          <ul>
+            <li className="grid gap-y-[.5rem]">
+              <Image
+                className="dark:invert bg-gray-300 p-[2rem]"
+                src="/vercel.svg"
+                alt={product.name}
+                width={100}
+                height={75}
+                priority
+              />
+              <h1>{product.name}</h1>
+              <p>¥1,000</p>
+              <p>{product.quantity}</p>
+            </li>
+          </ul>
+        </fieldset>
+        <fieldset className="my-[.5rem]" id="purchase">
+          <legend className="text-xl font-semibold">shipping address</legend>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>nation</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>first name</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>last name</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>post address</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>prefecture</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>city</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>route</label>
+            <input className="border border-gray-200" type="text" required/>
+          </div>
+          <div className="flex grid md:grid-flow-col md:gap-x-[.5rem] md:justify-between mt-[.5rem]">
+            <label>room number</label>
+            <input className="border border-gray-200" type="text"/>
+          </div>
+        </fieldset>
+        <fieldset className="my-[.5rem]">
+          <legend className=" text-xl font-semibold mb-[.5rem]">pay method</legend>
+          <div>
+            <input className="mr-[.5rem]" name="payment method" type="radio" value="credit card"/>
+            <label htmlFor="">credit caard</label>
+          </div>
+          <div>
+            <input className="mr-[.5rem]" name="payment method" type="radio" value="google pay"/>
+            <label htmlFor="">google pay</label>
+          </div>
+          <div>
+            <input className="mr-[.5rem]" name="payment method" type="radio" value="apple pay"/>
+            <label htmlFor="">apple pay</label>
+          </div>
+          <div>
+            <input className="mr-[.5rem]" name="payment method" type="radio" value="cash"/>
+            <label htmlFor="">cash</label>
+          </div>
+        </fieldset>
+        <form id="purchase" /* action="/" method="POST" */>
+          <input type="submit" className="text-center bg-gray-300 py-[.5rem] px-[1rem]" value="purchase"/>
+        </form>
       </div>
     </main>
   );
