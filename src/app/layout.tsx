@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
 import "./globals.css";
+import Header from "../components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,33 +26,7 @@ export default function RootLayout({ children, }: Readonly<{children: React.Reac
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="flex justify-around items-center py-[1rem] bg-gray-200">
-          <Image
-            className="dark:invert"
-            src="/next.svg"
-            alt="account menu"
-            width={100}
-            height={20}
-            priority
-          />
-          <nav className="flex">
-            <button>
-              <Image
-                className="dark:invert"
-                src="/globe.svg"
-                alt="account menu"
-                width={20}
-                height={20}
-                priority
-              />
-            </button>
-            <ul className="hidden">
-              <li>menu</li>
-              <li>menu</li>
-              <li>menu</li>
-            </ul>
-          </nav>
-        </header>
+        <Header/>
         {children}
         <footer>
           <small className="block text-center bg-gray-200 py-[.5rem]">copyright</small>
