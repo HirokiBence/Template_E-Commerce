@@ -52,7 +52,7 @@ const Page = async () => {
           </li>
         ))}
       </ul>
-      <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto mt-[2rem]" href={`/chekout/`}>checkout</Link>
+      <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto mt-[2rem]" href={`/checkout/`}>checkout</Link>
     </main>
   );
 }
