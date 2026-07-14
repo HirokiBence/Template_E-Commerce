@@ -9,7 +9,7 @@ const Page = async ({
   const product = (await params).slug
 
   return (
-    <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center justify-between py-[4rem] px-[2rem] bg-white dark:bg-black">
       <div className="grid gap-y-[.5rem]">
         <Image
           className="dark:invert bg-gray-300 p-[2rem]"
@@ -28,7 +28,7 @@ const Page = async ({
             <option value="3">3</option>
           </select>
           <p>description</p>
-          <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/chekout/`}>purchase</Link>
+          <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/checkout/`}>purchase</Link>
         </div>
       </div>
     </main>
