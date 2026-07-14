@@ -4,14 +4,16 @@ import Link from "next/link";
 const Header = () => {
   return(
     <header className="flex justify-around items-center py-[1rem] bg-gray-200">
-      <Image
-        className="cursor-pointer dark:invert"
-        src="/next.svg"
-        alt="shop name"
-        width={100}
-        height={20}
-        priority
-      />
+      <Link className="cursor-pointer" href={`/`}>
+        <Image
+          className="cursor-pointer dark:invert"
+          src="/next.svg"
+          alt="shop name"
+          width={100}
+          height={20}
+          priority
+        />
+      </Link>
       <nav>
         <Link className="cursor-pointer" href={`/cart/`}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
