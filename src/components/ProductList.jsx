@@ -1,33 +1,32 @@
 import Image from "next/image";
-import Link from "next/link";
 
-const Page = async () => {
-  const product = [
-    {
-      id: crypto.randomUUID(),
-      name: "key",
-      image: "/vercel.svg",
-      price: 1000,
-      link: "key",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "desk",
-      image: "/vercel.svg",
-      price: 1000,
-      link: "desk",
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "mouse",
-      image: "/vercel.svg",
-      price: 1000,
-      link: "mouse",
-    },
-  ];
+const product = [
+  {
+    id: crypto.randomUUID(),
+    name: "key",
+    image: "/vercel.svg",
+    price: 1000,
+    link: "key",
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "desk",
+    image: "/vercel.svg",
+    price: 1000,
+    link: "desk",
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "mouse",
+    image: "/vercel.svg",
+    price: 1000,
+    link: "mouse",
+  },
+];
+
+const ProductList = async () => {
 
   return (
-    <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center py-[4rem] px-[2rem] bg-white dark:bg-black">
       <ul className="grid justify-center gap-y-[1rem] w-full">
         {product.map(item => (
           <li key={item.id} className="grid grid-cols-[auto_1fr] gap-x-[.5rem] w-full">
@@ -52,9 +51,7 @@ const Page = async () => {
           </li>
         ))}
       </ul>
-      <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto mt-[2rem]" href={`/chekout/`}>checkout</Link>
-    </main>
   );
 }
 
-export default Page;
+export default ProductList;
