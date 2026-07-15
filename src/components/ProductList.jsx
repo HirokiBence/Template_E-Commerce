@@ -1,12 +1,15 @@
 import Image from "next/image";
+import QuantitiySelector from "@/components/QuantitySelector";
 
-const product = [
+const cart = [
   {
     id: crypto.randomUUID(),
     name: "key",
     image: "/vercel.svg",
     price: 1000,
     link: "key",
+    quantity: 3,
+    max: 20,
   },
   {
     id: crypto.randomUUID(),
@@ -14,6 +17,8 @@ const product = [
     image: "/vercel.svg",
     price: 1000,
     link: "desk",
+    quantity: 1,
+    max: 5,
   },
   {
     id: crypto.randomUUID(),
@@ -21,14 +26,16 @@ const product = [
     image: "/vercel.svg",
     price: 1000,
     link: "mouse",
+    quantity: 2,
+    max: 10,
   },
 ];
 
-const ProductList = async () => {
+const ProductList = async ({operatableQuantity}) => {
 
   return (
-      <ul className="grid justify-center gap-y-[1rem] w-full">
-        {product.map(item => (
+      <ul className="grid gap-y-[1rem] w-fit">
+        {cart.map(item => (
           <li key={item.id} className="grid grid-cols-[auto_1fr] gap-x-[.5rem] w-full">
             <Image
               className="dark:invert bg-gray-300 p-[2rem]"
@@ -41,11 +48,10 @@ const ProductList = async () => {
             <div className="grid grid-cols-2 gap-[.5rem] w-fit">
               <h1 className="col-span-2">{item.name}</h1>
               <p className="self-center">¥1,000</p>
-              <select className="w-fit" name="quantity">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
+              {operatableQuantity
+              ? <QuantitiySelector/>
+              : <p className="self-center">{item.quantity}</p>
+              }
             </div>
             <p className="col-span-2 justify-self-start">product description long version</p>
           </li>
