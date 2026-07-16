@@ -8,8 +8,9 @@ const cart = [
     image: "/vercel.svg",
     price: 1000,
     link: "key",
-    quantity: 3,
+    stock: 8,
     max: 20,
+    quantity: 3,
   },
   {
     id: crypto.randomUUID(),
@@ -17,8 +18,9 @@ const cart = [
     image: "/vercel.svg",
     price: 1000,
     link: "desk",
-    quantity: 1,
+    stock: 3,
     max: 5,
+    quantity: 1,
   },
   {
     id: crypto.randomUUID(),
@@ -26,8 +28,9 @@ const cart = [
     image: "/vercel.svg",
     price: 1000,
     link: "mouse",
-    quantity: 2,
+    stock: 6,
     max: 10,
+    quantity: 2,
   },
 ];
 
@@ -49,7 +52,7 @@ const ProductList = async ({operatableQuantity}) => {
               <h1 className="col-span-2">{item.name}</h1>
               <p className="self-center">¥1,000</p>
               {operatableQuantity
-              ? <QuantitiySelector/>
+              ? <QuantitiySelector item={item}/>
               : <p className="self-center">{item.quantity}</p>
               }
             </div>
