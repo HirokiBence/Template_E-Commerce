@@ -1,44 +1,24 @@
 import Image from "next/image";
 import QuantitiySelector from "@/components/QuantitySelector";
 
-const cart = [
-  {
-    id: crypto.randomUUID(),
-    name: "key",
-    image: "/vercel.svg",
-    price: 1000,
-    link: "key",
-    stock: 8,
-    max: 20,
-    quantity: 3,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "desk",
-    image: "/vercel.svg",
-    price: 1000,
-    link: "desk",
-    stock: 3,
-    max: 5,
-    quantity: 1,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "mouse",
-    image: "/vercel.svg",
-    price: 1000,
-    link: "mouse",
-    stock: 6,
-    max: 10,
-    quantity: 2,
-  },
-];
+async function getProducts(){
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`,{
+    cache: "no-store",
+  });
+
+  if(!res.ok){
+    throw new Error("商品の取得に失敗しました");
+  }
+
+  return res.json();
+}
 
 const ProductList = async ({operatableQuantity}) => {
+  const products = await getProducts();
 
   return (
       <ul className="grid gap-y-[1rem] w-fit">
-        {cart.map(item => (
+        {products.map(item => (
           <li key={item.id} className="grid grid-cols-[auto_1fr] gap-x-[.5rem] w-full">
             <Image
               className="dark:invert bg-gray-300 p-[2rem]"
