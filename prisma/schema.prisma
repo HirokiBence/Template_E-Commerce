@@ -1,0 +1,88 @@
+// Define database connection via the `DATABASE_URL` env var
+datasource db {
+  provider = "postgresql"
+  // directUrl = process.env["POSTGRES_URL"]
+  // shadoeDatabaseUrl = process.env["POSTGRES_URL"]
+}
+
+// Define custom output path for generated Prisma Client
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// Example data model
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  products Product[]
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  image       String
+  priceCents  Int
+  stock       Int         @default(0)
+  max         Int         @default(5)
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+
+  @@index([categoryId])
+}
+
+// 今はログイン機能なしでも動くよう、sessionIdでカートを識別できる設計にしておく
+model Cart {
+  id        String     @id @default(cuid())
+  sessionId String     @unique
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int     @default(1)
+
+  @@unique([cartId, productId])
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  sessionId  String
+  status     OrderStatus @default(PENDING)
+  totalCents Int
+  items      OrderItem[]
+  createdAt  DateTime    @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String
+  product    Product @relation(fields: [productId], references: [id])
+  productId  String
+  quantity   Int
+  priceCents Int     // 注文確定時点の価格を保存(後で商品価格が変わっても影響しない)
+}
