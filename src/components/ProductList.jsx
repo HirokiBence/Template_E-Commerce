@@ -1,17 +1,18 @@
 import Image from "next/image";
+import { getProducts } from "@/lib/product";
 import QuantitiySelector from "@/components/QuantitySelector";
 
-async function getProducts(){
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`,{
-    cache: "no-store",
-  });
+// async function getProducts(){
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`,{
+//     cache: "no-store",
+//   });
 
-  if(!res.ok){
-    throw new Error("商品の取得に失敗しました");
-  }
+//   if(!res.ok){
+//     throw new Error("商品の取得に失敗しました");
+//   }
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 const ProductList = async ({operatableQuantity}) => {
   const products = await getProducts();
