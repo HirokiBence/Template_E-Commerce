@@ -15,3 +15,22 @@ export async function getProducts() {
     max: p.max,
   }));
 }
+
+// slugから1件だけ取得
+export async function getProductBySlug(slug: string) {
+  const product = await prisma.product.findUnique({
+    where: { slug },
+  });
+
+  if (!product) return null;
+
+  return {
+    id: product.id,
+    name: product.name,
+    slug: product.slug,
+    image: product.image,
+    price: product.priceCents / 100,
+    stock: product.stock,
+    max: product.max,
+  };
+}
