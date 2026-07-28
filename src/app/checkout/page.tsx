@@ -1,33 +1,13 @@
-import Image from "next/image";
-// import Link from "next/link";
+import ProductList from "@/components/ProductList";
 
 const Page = () => {
-
-  const product = {
-    name: "product name",
-    quantity: "1",
-  }
 
   return (
     <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center justify-between py-[4rem] px-[2rem] bg-white dark:bg-black">
       <div className="grid gap-y-[.5rem] mx-auto">
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold mb-[.5rem]">order details</legend>
-          <ul>
-            <li className="grid gap-y-[.5rem]">
-              <Image
-                className="dark:invert bg-gray-300 p-[2rem]"
-                src="/vercel.svg"
-                alt={product.name}
-                width={100}
-                height={75}
-                priority
-              />
-              <h1>{product.name}</h1>
-              <p>¥1,000</p>
-              <p>{product.quantity}</p>
-            </li>
-          </ul>
+          <ProductList operatableQuantity={false}/>
         </fieldset>
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold">shipping address</legend>
