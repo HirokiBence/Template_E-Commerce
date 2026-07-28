@@ -1,8 +1,6 @@
 // Define database connection via the `DATABASE_URL` env var
 datasource db {
   provider = "postgresql"
-  // directUrl = process.env["POSTGRES_URL"]
-  // shadoeDatabaseUrl = process.env["POSTGRES_URL"]
 }
 
 // Define custom output path for generated Prisma Client
