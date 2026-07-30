@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
 type Props = {
   id: string;
@@ -16,7 +15,7 @@ type Props = {
   stock: number;
 };
 
-export function CartItemRow({ id, name, image, slug, price, quantity, max, stock }: Props) {
+export default function CartItem({ id, name, image, slug, price, quantity, max, stock }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const upperLimit = Math.min(max, stock);
@@ -48,48 +47,39 @@ export function CartItemRow({ id, name, image, slug, price, quantity, max, stock
   };
 
   return (
-    <li
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "1rem",
-        border: "1px solid #ddd",
-        padding: "0.75rem",
-        borderRadius: "8px",
-        opacity: loading ? 0.5 : 1,
-      }}
-    >
-      <Image src={image} alt={name} width={50} height={50} />
-      <div style={{ flex: 1 }}>
-        <Link href={`/products/${slug}`} style={{ fontWeight: "bold" }}>
-          {name}
-        </Link>
-        <p>¥{price.toLocaleString()}</p>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.25rem" }}>
-          <button onClick={() => updateQuantity(quantity - 1)} disabled={loading || quantity <= 1}>
+    <li key={id} className="grid grid-cols-[auto_1fr] gap-x-[.5rem] w-full">
+      <Image
+        className="dark:invert bg-gray-300 p-[2rem]"
+        src={image}
+        alt={name}
+        width={100}
+        height={75}
+        priority
+      />
+      <div className="grid grid-cols-2 gap-[.5rem] w-fit">
+        <h2 className="col-span-2">{name}</h2>
+        <p className="col-span-2">¥{price.toLocaleString()}</p>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="w-12 text-center select-none">{quantity}</span>
+          <button
+            onClick={() => updateQuantity(quantity - 1)}
+            disabled={loading || quantity <= 1}
+            className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+          >
             −
           </button>
-          <input
-            type="number"
-            min={1}
-            max={upperLimit}
-            value={quantity}
-            onChange={(e) => updateQuantity(Number(e.target.value))}
-            disabled={loading}
-            style={{ width: "3rem", textAlign: "center" }}
-          />
-          <button onClick={() => updateQuantity(quantity + 1)} disabled={loading || quantity >= upperLimit}>
+          <button
+            onClick={() => updateQuantity(quantity + 1)}
+            disabled={loading || quantity >= upperLimit}
+            className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+          >
             +
           </button>
+          <button className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto" onClick={handleDelete} disabled={loading}>
+            削除
+          </button>
         </div>
-
-        <p>小計: ¥{(price * quantity).toLocaleString()}</p>
       </div>
-
-      <button onClick={handleDelete} disabled={loading}>
-        削除
-      </button>
     </li>
   );
 }
