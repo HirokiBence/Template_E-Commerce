@@ -36,69 +36,81 @@ export async function GET() {
 
 // カートに商品を追加
 export async function POST(request: Request) {
-  const sessionId = await getOrCreateSessionId();
-  const { productId } = await request.json();
+  try{
+    const sessionId = await getOrCreateSessionId();
+    const { productId, quantity } = await request.json();
 
-  if (!productId) {
-    return NextResponse.json(
-      { error: "productId is required" },
-      { status: 400 }
-    );
-  }
+    // start validation
+    if (!productId) {
+      return NextResponse.json(
+        { error: "productId is required" },
+        { status: 400 }
+      );
+    }
 
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-  });
+    const requestedQunatity = 
+      typeof quantity === "number" && quantity >= 1
+      ? Math.floor(quantity)
+      : 1;
 
-  if (!product) {
-    return NextResponse.json({ error: "Product not found" }, { status: 404 });
-  }
-
-  if (product.stock <= 0) {
-    return NextResponse.json({ error: "在庫切れです" }, { status: 400 });
-  }
-
-  // カートがなければ作成、あれば取得
-  const cart = await prisma.cart.upsert({
-    where: { sessionId },
-    create: { sessionId },
-    update: {},
-  });
-
-  // 既にカートに同じ商品があるか確認
-  const existingItem = await prisma.cartItem.findUnique({
-    where: {
-      cartId_productId: {
-        cartId: cart.id,
-        productId,
-      },
-    },
-  });
-
-  if (existingItem) {
-    // 既にある場合は数量を+1(在庫・maxの上限まで)
-    const newQuantity = Math.min(
-      existingItem.quantity + 1,
-      product.max,
-      product.stock
-    );
-
-    await prisma.cartItem.update({
-      where: { id: existingItem.id },
-      data: { quantity: newQuantity },
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
     });
-  } else {
-    // 新規追加
-    await prisma.cartItem.create({
-      data: {
-        cartId: cart.id,
-        productId,
-        quantity: 1,
+
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    if (product.stock <= 0) {
+      return NextResponse.json({ error: "在庫切れです" }, { status: 400 });
+    }
+    // end validation
+
+    // カートがなければ作成、あれば取得
+    const cart = await prisma.cart.upsert({
+      where: { sessionId },
+      create: { sessionId },
+      update: {},
+    });
+
+    // 既にカートに同じ商品があるか確認
+    const existingItem = await prisma.cartItem.findUnique({
+      where: {
+        cartId_productId: {
+          cartId: cart.id,
+          productId,
+        },
       },
     });
-  }
 
-  return NextResponse.json({ success: true });
+    if (existingItem) {
+      // 既にある場合は数量を+1(在庫・maxの上限まで)
+      const newQuantity = Math.min(
+        existingItem.quantity + 1,
+        product.max,
+        product.stock
+      );
+
+      await prisma.cartItem.update({
+        where: { id: existingItem.id },
+        data: { quantity: newQuantity },
+      });
+    } else {
+      // 新規追加
+      await prisma.cartItem.create({
+        data: {
+          cartId: cart.id,
+          productId,
+          quantity: 1,
+        },
+      });
+    }
+
+    return NextResponse.json({ success: true });
+  }catch(err){
+    console.error("Cart POST error:", err);
+    return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
+  }
 }
 
 // カートの中身を取得

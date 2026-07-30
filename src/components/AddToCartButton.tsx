@@ -1,16 +1,21 @@
-// components/AddToCartButton.tsx
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   productId: string;
   stock: number;
+  max: number;
 };
 
-export function AddToCartButton({ productId, stock }: Props) {
+export function AddToCartButton({ productId, stock, max }: Props) {
+  const router = useRouter();
+  const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  const upperLimit = Math.min(max, stock);
 
   const handleAdd = async () => {
     setLoading(true);
@@ -19,7 +24,7 @@ export function AddToCartButton({ productId, stock }: Props) {
     const res = await fetch("/api/cart", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
+      body: JSON.stringify({ productId, quantity }),
     });
 
     const data = await res.json();
@@ -31,19 +36,48 @@ export function AddToCartButton({ productId, stock }: Props) {
     }
 
     setMessage("カートに追加しました");
+    router.refresh();
   };
 
-  return (
-    <div>
+  if(stock === 0 ){
+    return (
       <button
-        onClick={handleAdd}
-        disabled={stock === 0 || loading}
+        disabled
         className="text-center bg-gray-300 py-[.5rem] px-[1rem]"
       >
-        {stock === 0 ? "在庫切れ" : loading ? "追加中..." : "カートに追加"}
+        在庫切れ
       </button>
-      {message && <p style={{ fontSize: "0.85rem", marginTop: "0.25rem" }}>{message}</p>}
-    </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="flex items-center gap-2 mt-1">
+        <span className="w-8 text-center select-none">{quantity}</span>
+        <button
+          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+          disabled={loading || quantity <= 1}
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+        >
+          −
+        </button>
+        <button
+          onClick={() => setQuantity((q) => Math.min(upperLimit, q + 1))}
+          disabled={loading || quantity >= upperLimit}
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+        >
+          +
+        </button>
+      </div>
+      <button
+        onClick={handleAdd}
+        disabled={loading}
+        className="text-center bg-gray-300 py-[.5rem] px-[1rem]"
+      >
+        {loading ? "追加中..." : "カートに追加"}
+      </button>
+      {message && <p className="text-sm">{message}</p>}
+    </>
   );
 }
 

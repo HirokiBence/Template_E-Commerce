@@ -30,13 +30,8 @@ const Page = async ({ params }: PageProps) => {
         <div className="grid gap-y-[.5rem]">
           <h1>{product.name}</h1>
           <p>¥1,000</p>
-          <select className="w-fit" name="quantity">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
           <p>description</p>
-          <AddToCartButton productId={product.id} stock={product.stock} />
+          <AddToCartButton productId={product.id} stock={product.stock} max={product.max}/>
           <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/checkout/`}>purchase</Link>
         </div>
       </div>
