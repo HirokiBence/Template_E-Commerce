@@ -5,11 +5,11 @@ import { getProductBySlug } from "@/lib/product";
 import { AddToCartButton } from "@/components/AddToCartButton";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ productName: string }>;
 };
 
 const Page = async ({ params }: PageProps) => {
-  const { slug } = await params;
+  const slug = (await params).productName;
   const product = await getProductBySlug(slug);
 
   if(!product){
