@@ -28,7 +28,7 @@ const Page = async ({ params }: PageProps) => {
         />
         <div className="grid gap-y-[.5rem]">
           <h1>{product.name}</h1>
-          <p>¥1,000</p>
+          <data value={product.price}>¥{product.price}</data>
           <p>description</p>
           <AddToCartButton productId={product.id} stock={product.stock} max={product.max}/>
         </div>
