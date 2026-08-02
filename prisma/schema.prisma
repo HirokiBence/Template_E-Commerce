@@ -63,7 +63,7 @@ model CartItem {
 model Order {
   id         String      @id @default(cuid())
   sessionId  String
-  stripeCheckoutSessioId String? @unique
+  stripeCheckoutSessionId String? @unique
   status     OrderStatus @default(PENDING)
   totalCents Int
   items      OrderItem[]
