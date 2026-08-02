@@ -1023,6 +1023,7 @@ export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   sessionId: 'sessionId',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
   status: 'status',
   totalCents: 'totalCents',
   createdAt: 'createdAt'
