@@ -60,7 +60,7 @@ export function AddToCartButton({ productId, stock, max }: Props) {
         >
           −
         </button>
-        <span className="w-8 text-center select-none">{quantity}</span>
+        <span className="w-6 text-center select-none">{quantity}</span>
         <button
           onClick={() => setQuantity((q) => Math.min(upperLimit, q + 1))}
           disabled={loading || quantity >= upperLimit}

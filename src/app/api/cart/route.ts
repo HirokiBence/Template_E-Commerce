@@ -1,4 +1,3 @@
-// app/api/cart/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrCreateSessionId } from "@/lib/session";
@@ -42,13 +41,10 @@ export async function POST(request: Request) {
 
     // start validation
     if (!productId) {
-      return NextResponse.json(
-        { error: "productId is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "productId is required" },{ status: 400 });
     }
 
-    const requestedQunatity = 
+    const requestedQuantity = 
       typeof quantity === "number" && quantity >= 1
       ? Math.floor(quantity)
       : 1;
@@ -86,7 +82,7 @@ export async function POST(request: Request) {
     if (existingItem) {
       // 既にある場合は数量を+1(在庫・maxの上限まで)
       const newQuantity = Math.min(
-        existingItem.quantity + 1,
+        existingItem.quantity + requestedQuantity,
         product.max,
         product.stock
       );
@@ -97,11 +93,13 @@ export async function POST(request: Request) {
       });
     } else {
       // 新規追加
+      const initialQuantity = Math.min(requestedQuantity, product.max, product.stock);
+
       await prisma.cartItem.create({
         data: {
           cartId: cart.id,
           productId,
-          quantity: 1,
+          quantity: initialQuantity,
         },
       });
     }
