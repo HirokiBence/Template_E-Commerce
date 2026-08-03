@@ -57,7 +57,7 @@ export async function POST(){
         price_data: {
           currency: "jpy",
           product_data: { name: item.product.name },
-          unit_amount: item.product.priceCents,
+          unit_amount: item.product.priceCents / 100,
         },
         quantity: item.quantity,
       })),
