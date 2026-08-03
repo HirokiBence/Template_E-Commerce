@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCart } from "@/lib/cart";
 import CartItem from "@/components/CartItem";
+import { CheckoutButton } from "@/components/CheckoutButton";
 
 const Page = async () => {
 
@@ -32,10 +33,12 @@ const Page = async () => {
           />
         ))}
       </ul>
-      <p style={{ marginTop: "1.5rem", fontSize: "1.25rem", fontWeight: "bold" }}>
+      <p className="mt-[1.5rem] text-[1.25rem] font-semibold">
         合計: ¥{totalYen.toLocaleString()}
       </p>
-      <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto mt-[2rem]" href={`/checkout/`}>checkout</Link>
+      <div className="mt-[1.5rem]">
+        <CheckoutButton/>
+      </div>
     </main>
   );
 }

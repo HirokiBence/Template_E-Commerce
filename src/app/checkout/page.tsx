@@ -1,13 +1,48 @@
-import ProductList from "@/components/ProductList";
+'use client';
+
+import { useState, useEffect } from 'react';
+
+// import ProductList from "@/components/ProductList";
 
 const Page = () => {
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const startChecktout = async () => {
+      const res = await fetch("api/checkout", { method: "POST" });
+      const data = await res.json();
+
+      if(!res.ok){
+        setError(data.error ?? "チェックアウト開始に失敗しました");
+        return;
+      }
+
+      window.location.href = data.url;
+    }
+
+    startChecktout();
+  },[]);
+
+  if(error){
+    return(
+      <div className="p-6 text-center">
+        <p className="text-red-600">{error}</p>
+      </div>
+    )
+  }
+
+  return(
+    <div className="p-6 text-center">
+      <p>決済ページへ移動しています...</p>
+    </div>
+  );
 
   return (
     <main className="flex flex-1 w-full max-w-4xl mx-auto flex-col items-center justify-between py-[4rem] px-[2rem] bg-white dark:bg-black">
       <div className="grid gap-y-[.5rem] mx-auto">
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold mb-[.5rem]">order details</legend>
-          <ProductList operatableQuantity={false}/>
+          {/* <ProductList operatableQuantity={false}/> */}
         </fieldset>
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold">shipping address</legend>

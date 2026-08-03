@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/product";
 import { AddToCartButton } from "@/components/AddToCartButton";
@@ -29,10 +28,9 @@ const Page = async ({ params }: PageProps) => {
         />
         <div className="grid gap-y-[.5rem]">
           <h1>{product.name}</h1>
-          <p>¥1,000</p>
           <p>description</p>
+          <data value={product.price}>¥{product.price}</data>
           <AddToCartButton productId={product.id} stock={product.stock} max={product.max}/>
-          <Link className="text-center bg-gray-300 py-[.5rem] px-[1rem]" href={`/checkout/`}>purchase</Link>
         </div>
       </div>
     </main>
