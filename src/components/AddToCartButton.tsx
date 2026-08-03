@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { QuantitySelector } from "@/components/QuantitySelector";
 
 type Props = {
   productId: string;
@@ -52,23 +53,13 @@ export function AddToCartButton({ productId, stock, max }: Props) {
 
   return (
     <>
-      <div className="flex items-center gap-2 mt-1">
-        <button
-          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-          disabled={loading || quantity <= 1}
-          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 cursor-pointer"
-        >
-          −
-        </button>
-        <span className="w-6 text-center select-none">{quantity}</span>
-        <button
-          onClick={() => setQuantity((q) => Math.min(upperLimit, q + 1))}
-          disabled={loading || quantity >= upperLimit}
-          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 cursor-pointer"
-        >
-          +
-        </button>
-      </div>
+      <QuantitySelector
+        quantity={quantity}
+        max={upperLimit}
+        disabled={loading}
+        onIncrement={() => setQuantity((q) => Math.min(upperLimit, q + 1))}
+        onDecrement={() => setQuantity((q) => Math.max(1, q - 1))}
+      />
       <button
         onClick={handleAdd}
         disabled={loading}

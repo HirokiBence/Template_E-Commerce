@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { QuantitySelector } from "@/components/QuantitySelector";
 
 type Props = {
   id: string;
@@ -60,25 +61,17 @@ export default function CartItem({ id, name, image, slug, price, quantity, max, 
         <h2 className="col-span-2">{name}</h2>
         <p className="col-span-2">¥{price.toLocaleString()}</p>
         <div className="flex items-center gap-2 mt-1">
-          <button
-            onClick={() => updateQuantity(quantity - 1)}
-            disabled={loading || quantity <= 1}
-            className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed hover:bg-gray-100"
-          >
-            −
-          </button>
-          <span className="w-6 text-center select-none">{quantity}</span>
-          <button
-            onClick={() => updateQuantity(quantity + 1)}
-            disabled={loading || quantity >= upperLimit}
-            className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed hover:bg-gray-100"
-          >
-            +
-          </button>
-          <button className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto" onClick={handleDelete} disabled={loading}>
-            削除
-          </button>
+          <QuantitySelector
+            quantity={quantity}
+            max={upperLimit}
+            disabled={loading}
+            onIncrement={() => updateQuantity(quantity + 1)}
+            onDecrement={() => updateQuantity(quantity - 1)}
+          />
         </div>
+        <button className="text-center bg-gray-300 py-[.5rem] px-[1rem] mx-auto cursor-pointer" onClick={handleDelete} disabled={loading}>
+          削除
+        </button>
       </div>
     </li>
   );
