@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 
-// import ProductList from "@/components/ProductList";
-
 const Page = () => {
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +40,6 @@ const Page = () => {
       <div className="grid gap-y-[.5rem] mx-auto">
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold mb-[.5rem]">order details</legend>
-          {/* <ProductList operatableQuantity={false}/> */}
         </fieldset>
         <fieldset className="my-[.5rem]" id="purchase">
           <legend className="text-xl font-semibold">shipping address</legend>
