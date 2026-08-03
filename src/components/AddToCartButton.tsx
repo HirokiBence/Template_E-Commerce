@@ -53,18 +53,18 @@ export function AddToCartButton({ productId, stock, max }: Props) {
   return (
     <>
       <div className="flex items-center gap-2 mt-1">
-        <span className="w-8 text-center select-none">{quantity}</span>
         <button
           onClick={() => setQuantity((q) => Math.max(1, q - 1))}
           disabled={loading || quantity <= 1}
-          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 cursor-pointer"
         >
           −
         </button>
+        <span className="w-8 text-center select-none">{quantity}</span>
         <button
           onClick={() => setQuantity((q) => Math.min(upperLimit, q + 1))}
           disabled={loading || quantity >= upperLimit}
-          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100"
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 cursor-pointer"
         >
           +
         </button>
@@ -72,7 +72,7 @@ export function AddToCartButton({ productId, stock, max }: Props) {
       <button
         onClick={handleAdd}
         disabled={loading}
-        className="text-center bg-gray-300 py-[.5rem] px-[1rem]"
+        className="text-center bg-gray-300 py-[.5rem] px-[1rem] cursor-pointer"
       >
         {loading ? "追加中..." : "カートに追加"}
       </button>
