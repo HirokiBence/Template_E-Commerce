@@ -9,14 +9,14 @@ type Props = {
   id: string;
   name: string;
   image: string;
-  slug: string;
+  // slug: string;
   price: number;
   quantity: number;
   max: number;
   stock: number;
 };
 
-export default function CartItem({ id, name, image, slug, price, quantity, max, stock }: Props) {
+export default function CartItem({ id, name, image, /* slug, */ price, quantity, max, stock }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const upperLimit = Math.min(max, stock);

@@ -25,7 +25,7 @@ const Page = async () => {
             id={item.id}
             name={item.name}
             image={item.image}
-            slug={item.slug}
+            // slug={item.slug}
             price={item.price}
             quantity={item.quantity}
             max={item.max}
