@@ -4,7 +4,7 @@ const SESSION_COOKIE_NAME = "session_id";
 
 export async function getOrCreateSessionId(): Promise<string> {
   const cookieStore = await cookies();
-  const existing = await cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const existing = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
   if(existing){
     return existing;
