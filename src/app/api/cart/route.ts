@@ -2,37 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getOrCreateSessionId } from "@/lib/session";
 
-// カートの中身を取得
-export async function GET() {
-  const sessionId = await getOrCreateSessionId();
-
-  const cart = await prisma.cart.findUnique({
-    where: { sessionId },
-    include: {
-      items: {
-        include: { product: true },
-      },
-    },
-  });
-
-  if (!cart) {
-    return NextResponse.json({ items: [] });
-  }
-
-  const items = cart.items.map((item) => ({
-    id: item.id,
-    productId: item.product.id,
-    name: item.product.name,
-    image: item.product.image,
-    price: item.product.priceCents / 100,
-    quantity: item.quantity,
-    max: item.product.max,
-    stock: item.product.stock,
-  }));
-
-  return NextResponse.json({ items });
-}
-
 // カートに商品を追加
 export async function POST(request: Request) {
   try{
