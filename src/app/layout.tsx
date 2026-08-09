@@ -25,7 +25,7 @@ export default function RootLayout({ children, }: Readonly<{children: React.Reac
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="grid grid-rows-[auto_1fr_auto] min-h-screen m-0">
         <Header/>
         {children}
         <Footer/>
