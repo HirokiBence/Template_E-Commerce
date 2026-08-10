@@ -12,7 +12,7 @@ export function AuthStatus() {
     return (
       <div className="flex items-center gap-2">
         {/* <span>{session.user.name ?? session.user.email}</span> */}
-        <button onClick={() => signOut()}>ログアウト</button>
+        <button className="cursor-pointer" onClick={() => signOut()}>ログアウト</button>
       </div>
     );
   }
