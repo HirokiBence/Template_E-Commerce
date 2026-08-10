@@ -11,7 +11,7 @@ export function AuthStatus() {
   if (session) {
     return (
       <div className="flex items-center gap-2">
-        <span>{session.user.name ?? session.user.email}</span>
+        {/* <span>{session.user.name ?? session.user.email}</span> */}
         <button onClick={() => signOut()}>ログアウト</button>
       </div>
     );
