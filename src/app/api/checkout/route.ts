@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import { getOrCreateSessionId } from "@/lib/session"
+import { getSessionId } from "@/lib/session"
 
 export async function POST(){
   try {
     // カート検索用のidを取得
-    const sessionId = await getOrCreateSessionId();
+    const sessionId = await getSessionId();
+
+    if (!sessionId) {
+      return NextResponse.json({ error: "セッションが見つかりません" }, { status: 400 });
+    }
 
     // カートを取得
     const cart = await prisma.cart.findUnique({

@@ -1,8 +1,12 @@
 import { prisma } from "@/lib/prisma";
-import { getOrCreateSessionId } from "@/lib/session";
+import { getSessionId } from "@/lib/session";
 
 export async function getCart() {
-  const sessionId = await getOrCreateSessionId();
+  const sessionId = await getSessionId();
+
+  if (!sessionId) {
+    return { items: [], totalYen: 0 };
+  }
 
   // データ取得
   const cart = await prisma.cart.findUnique({

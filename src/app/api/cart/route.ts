@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getOrCreateSessionId } from "@/lib/session";
+import { getSessionId } from "@/lib/session";
 
 // カートに商品を追加
 export async function POST(request: Request) {
   try{
-    const sessionId = await getOrCreateSessionId();
+    const sessionId = await getSessionId();
+
+    if (!sessionId) {
+      return NextResponse.json({ error: "セッションが見つかりません" }, { status: 400 });
+    }
+
     const { productId, quantity } = await request.json();
 
     // start validation

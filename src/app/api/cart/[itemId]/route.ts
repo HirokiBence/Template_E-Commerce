@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getOrCreateSessionId } from "@/lib/session";
+import { getSessionId } from "@/lib/session";
 
 type Params = {
   params: Promise<{ itemId: string }>;
@@ -10,8 +10,12 @@ type Params = {
 export async function PATCH(request: Request, { params }: Params) {
   try {
     const { itemId } = await params;
-    const sessionId = await getOrCreateSessionId();
+    const sessionId = await getSessionId();
     const { quantity } = await request.json();
+
+    if (!sessionId) {
+      return NextResponse.json({ error: "セッションが見つかりません" }, { status: 400 });
+    }
 
     if (typeof quantity !== "number" || quantity < 1) {
       return NextResponse.json(
@@ -52,7 +56,11 @@ export async function PATCH(request: Request, { params }: Params) {
 export async function DELETE(request: Request, { params }: Params) {
   try {
     const { itemId } = await params;
-    const sessionId = await getOrCreateSessionId();
+    const sessionId = await getSessionId();
+
+    if (!sessionId) {
+      return NextResponse.json({ error: "セッションが見つかりません" }, { status: 400 });
+    }
 
     const item = await prisma.cartItem.findUnique({
       where: { id: itemId },
